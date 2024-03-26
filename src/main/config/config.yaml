@@ -1,0 +1,12 @@
+# Browser config
+browser:
+  default: chrome #chrome, firefox, edge, remote (Docker needs to be installed locally)
+  maximize: true #true, false
+  seeVNC: false #true, false --> only applicable for remote
+  mobile: false #true, false
+  headless: false #true, false
+  tearDown: true #true, false
+screenshots:
+  format: .png
+
+# This file is meant to be used with the YML helper. End of file

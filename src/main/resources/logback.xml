@@ -1,0 +1,54 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"> <!-- you can change the appender to anything, this is for the console -->
+        <!-- For Printing message with date , time & class name also
+            <param name="ConversionPattern" value="%d{dd MMM yyyy HH:mm:ss} %5p %c{1} - %m%n"/>
+            -->
+        <!-- For printing message only
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-5p[%c{1}]: %m%n"/>
+        </layout>
+            -->
+        <encoder>
+            <pattern>%date{MMM dd yyyy;HH:mm:ss} %-5level - %msg%n</pattern> <!-- original: %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n -->
+        </encoder>
+    </appender>
+
+
+    <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.err</target>
+        <encoder>
+            <pattern>%date{MMM dd yyyy;HH:mm:ss} %-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/SQLI.log</file>
+        <append>false</append>
+        <!-- set immediateFlush to false for much higher logging throughput -->
+        <immediateFlush>true</immediateFlush>
+        <!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%date{MMM dd yyyy;HH:mm:ss} %-4relative [%thread] %-5level %logger{35} -%kvp- %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- <logger name="java" level ="DEBUG" /> -->
+    <!-- this is only for this folder, that is, the class i'm executing
+      note: you can add different logger name per line.
+      - debug shows debug, info, warn and error.
+      - warn shows error and warn.
+      - error shows error.
+      - info shows info, error and warn.
+      e.g.
+      <logger name="anotherFolder" level ="error" />
+      -->
+    <root level="INFO"> <!-- this means that generally i will log on info message, that is, project level (@FrontEnd). it overrides the folder levels -->
+        <appender-ref ref="STDOUT" />
+        <!--  <appender-ref ref="STDERR" /> commenting this out, use stdout or stderr-->
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
+
+        <!-- this file needs to be in the class path folder (where all the classes are saved). otherwise the logback will use a default configuration file. -->

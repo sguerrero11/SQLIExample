@@ -1,0 +1,97 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/object1711400696.json",
+  "title": "Root",
+  "type": "object",
+  "required": [
+    "id",
+    "username",
+    "firstName",
+    "lastName",
+    "email",
+    "password",
+    "phone",
+    "userStatus"
+  ],
+  "properties": {
+    "id": {
+      "$id": "#root/id",
+      "title": "Id",
+      "type": "integer",
+      "examples": [
+        227026064
+      ],
+      "default": 0
+    },
+    "username": {
+      "$id": "#root/username",
+      "title": "Username",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "Rocio.Grimes"
+      ],
+      "pattern": "^.*$"
+    },
+    "firstName": {
+      "$id": "#root/firstName",
+      "title": "Firstname",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "Rocio"
+      ],
+      "pattern": "^.*$"
+    },
+    "lastName": {
+      "$id": "#root/lastName",
+      "title": "Lastname",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "Grimes"
+      ],
+      "pattern": "^.*$"
+    },
+    "email": {
+      "$id": "#root/email",
+      "title": "Email",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "RocioGrimes@gmail.com"
+      ],
+      "pattern": "^.*$"
+    },
+    "password": {
+      "$id": "#root/password",
+      "title": "Password",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "y0amyb47q83"
+      ],
+      "pattern": "^.*$"
+    },
+    "phone": {
+      "$id": "#root/phone",
+      "title": "Phone",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "1-270-271-1839"
+      ],
+      "pattern": "^.*$"
+    },
+    "userStatus": {
+      "$id": "#root/userStatus",
+      "title": "Userstatus",
+      "type": "integer",
+      "examples": [
+        0
+      ],
+      "default": 0
+    }
+  }
+}
