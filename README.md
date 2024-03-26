@@ -30,9 +30,8 @@ This repository contains an automated testing framework designed for testing web
 **Usage:**
 1) Clone the repository to your local machine.
 2) Import the project into your preferred Java IDE.
-3) Do a `mvn clean install`.
-3) Configure the test suite and test cases as needed.
-4) Run the test suite using TestNG.
+3) Do a `mvn clean install` from the command line. _Note: once done, configure the test suite(s) and test cases as needed._
+4) Down the road, create test suite(s) xml file(s) when applicable. You can always run the Surefire Suite using Maven (`mvn test`) or run test classes/single tests using the IDE runner).
 
 **Most Relevant Dependencies:**
 
