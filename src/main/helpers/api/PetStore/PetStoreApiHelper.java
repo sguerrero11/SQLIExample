@@ -205,6 +205,7 @@ public class PetStoreApiHelper extends LoggerHelper {
                 .get()
                 .then()
                 .time(lessThanOrEqualTo(responseTimeExpected))
+//                .log().all()
                 .extract().response();
 
 
@@ -213,7 +214,7 @@ public class PetStoreApiHelper extends LoggerHelper {
 
         // Code is always 200, but it should return 400 if status is invalid according to API documentation
         if (statusCode == 200) {
-            printPetsByStatus(response, status);
+            printPetsByStatus(response, "sold");
         } else {
             System.out.println("Failed to get pets by status. Status code: " + statusCode);
             // Optionally, throw an exception or handle the error accordingly
