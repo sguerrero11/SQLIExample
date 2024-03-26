@@ -34,6 +34,11 @@ public class ProjectListener extends LoggerHelper implements ITestListener, ISui
 
     @Override
     public void onStart(ISuite suite) {
+        if (suite.getName().equals("Surefire suite")) {
+            // Selenium Configuration
+            BrowserDriverHelper.setupBrowser();
+        }
+
         logInfo("Starting suite");
         logInfo("I am in onStart method from " + suite.getName());
         logSeparatorSpaced();
@@ -41,6 +46,12 @@ public class ProjectListener extends LoggerHelper implements ITestListener, ISui
 
     @Override
     public void onFinish(ISuite suite) {
+        // Check if the suite name is "TestSuite"
+        if (suite.getName().equals("Surefire suite")) {
+            // Selenium Configuration
+            BrowserDriverHelper.closeBrowser();
+        }
+
         logInfo("Finishing suite");
         logInfo("I am in onFinish method from " + suite.getName());
         logSeparatorSpaced();
@@ -176,8 +187,6 @@ public class ProjectListener extends LoggerHelper implements ITestListener, ISui
 
     @Override
     public void onStart(ITestContext context) {
-
-        //context.setAttribute("WebDriver", this.driver);
 
         // Get the test class name
         testClassName = context.getCurrentXmlTest().getClasses().get(0).getName();

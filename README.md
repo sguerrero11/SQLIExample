@@ -30,6 +30,7 @@ This repository contains an automated testing framework designed for testing web
 **Usage:**
 1) Clone the repository to your local machine.
 2) Import the project into your preferred Java IDE.
+3) Do a `mvn clean install`.
 3) Configure the test suite and test cases as needed.
 4) Run the test suite using TestNG.
 

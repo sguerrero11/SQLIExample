@@ -40,4 +40,4 @@ build/
 ### Reports
 /reportsForManualQA/
 /logs
-logs/browserstack-plugin.log
+/logs/browserstack-plugin.log

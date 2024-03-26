@@ -58,7 +58,7 @@
                 <configuration>
                     <suiteXmlFiles>
                         <!--suppress UnresolvedMavenProperty -->
-                        <file>suites/panel/${suitePath}</file>
+<!--                        <file>suites/${suitePath}</file>-->
                     </suiteXmlFiles>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.4/aspectjweaver-1.9.4.jar"
