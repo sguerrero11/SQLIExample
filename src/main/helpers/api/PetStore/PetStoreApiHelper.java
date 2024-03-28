@@ -3,16 +3,24 @@ package helpers.api.PetStore;
 import com.github.javafaker.Faker;
 import helpers.logger.LoggerHelper;
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import org.json.simple.JSONObject;
+import org.testng.annotations.BeforeClass;
 import utils.PetNameCounter;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -27,6 +35,29 @@ public class PetStoreApiHelper extends LoggerHelper {
     int statusCodeExpected;
     long responseTimeExpected;
     Integer[] statusesCodeExpected;
+    RequestSpecification requestSpecificationForUsersPath;
+    ResponseSpecification responseSpecsForUsersPath;
+
+    @BeforeClass
+    public void setupRequestSpecs(){
+        requestSpecificationForUsersPath = new RequestSpecBuilder()
+                .addHeader("Content-type", "application/json")
+                .build();
+
+        responseSpecsForUsersPath = (ResponseSpecification) new ResponseSpecBuilder()
+                .expectStatusCode(statusCodeExpected)
+                .expectHeader("contentType","application/Json")
+                .expectContentType("application/Json");
+
+        /*
+        example usage
+
+         Response response = given()
+                .spec(requestSpecificationForUsersPath)
+                .when().get().then()
+                .spec(responseSpecsForUsersPath)
+         */
+    }
 
     public void setBaseURI(String url) {
         RestAssured.baseURI = url;
