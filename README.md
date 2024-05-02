@@ -16,6 +16,7 @@ This repository contains an automated testing framework designed for testing web
 
 **Test Cases:**
 
+- SauceDemoLoginTest.java: Test cases for SauceDemo login functionality.
 - GoogleSearchTest.java: Test cases for Google search functionality.
 - PetStoreAPITest.java: Test cases for the Pet Store API, including user creation, retrieval, and pet listing.
 
