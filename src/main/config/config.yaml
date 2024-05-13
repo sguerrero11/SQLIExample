@@ -5,7 +5,7 @@ browser:
   seeVNC: false #true, false --> only applicable for remote
   mobile: false #true, false
   headless: false #true, false
-  tearDown: true #true, false
+  tearDown: false #true, false
 screenshots:
   format: .png
 

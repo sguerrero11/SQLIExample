@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.asserts.SoftAssert;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,22 @@ public class AssertionsListHelper extends BasePage {
         addAssertion(description, result);
 
         assertEquals(argument, true,"Verify if argument is true");
+    }
+
+    public void isNull (URL url, String goal){
+        boolean result= url == null;
+        String description = String.format("Assert if argument \"%s\" is true", goal);
+        addAssertion(description, result);
+
+        assertEquals(result, true,"Verify if argument is true");
+    }
+
+    public void isNotNull (URL url, String goal){
+        boolean result= url != null;
+        String description = String.format("Assert if argument \"%s\" is true", goal);
+        addAssertion(description, result);
+
+        assertEquals(result, true,"Verify if argument is true");
     }
     public AssertionsListHelper equals(String actual, String expected) {
         boolean result = expected.equals(actual);

@@ -1,7 +1,7 @@
 package helpers.browser;
 
-import helpers.yamlReader.YMLHelper;
 import helpers.logger.LoggerHelper;
+import helpers.yamlReader.YMLHelper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -156,13 +156,17 @@ public abstract class BrowserDriverHelper extends LoggerHelper {
                 .browserInDocker()
                 .avoidDockerLocalFallback()
 //                .browserVersion()
-//                .browserInDockerAndroid()
-                .enableVnc();
-//        .enableRecording() // only if you want to see the recordings, update ";" if uncommented
+//                .browserInDockerAndroid() // --> Chrome Mobile
+                .enableVnc()
+        .enableRecording(); // only if you want to see the recordings, update ";" if uncommented // recordings as saved locally
         driver = wdm.create();
 
+
+        // Verify URL for remote session
         if (vncEnabled) {
             URL url = wdm.getDockerNoVncUrl();
+            assert url != null : "URL is null";
+            asserts.isNotNull(url, "Verify if URL is not null");
             browserVNC = new ChromeDriver();
             browserVNC.get(String.valueOf(url));
 
