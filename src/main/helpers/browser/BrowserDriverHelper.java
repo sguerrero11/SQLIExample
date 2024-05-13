@@ -156,9 +156,9 @@ public abstract class BrowserDriverHelper extends LoggerHelper {
                 .browserInDocker()
                 .avoidDockerLocalFallback()
 //                .browserVersion()
-//                .browserInDockerAndroid() // --> Chrome Mobile
-                .enableVnc()
-        .enableRecording(); // only if you want to see the recordings, update ";" if uncommented // recordings as saved locally
+//                .browserInDockerAndroid() // --> for Chrome Mobile
+                .enableRecording() // only if you want to see the recordings // recordings as saved locally
+                .enableVnc();
         driver = wdm.create();
 
 
