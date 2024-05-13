@@ -64,8 +64,8 @@ public abstract class BrowserDriverHelper extends LoggerHelper {
                 loadEdgeDriver();
                 break;
             case "remote":
+                vncEnabled = Boolean.TRUE.equals(YMLHelper.getYMLValue(YMLHelper.yamlData, "browser.seeVNC"));
                 loadRemoteDriver();
-                vncEnabled = Boolean.TRUE.equals(YMLHelper.getYMLValue(YMLHelper.yamlData, "browsers.seeVNC"));
                 break;
             default:
                 logError("Choose a valid browser");
