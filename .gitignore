@@ -41,3 +41,5 @@ build/
 /reportsForManualQA/
 /logs
 /logs/browserstack-plugin.log
+/target
+/.idea
