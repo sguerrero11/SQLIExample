@@ -153,12 +153,14 @@ public abstract class BrowserDriverHelper extends LoggerHelper {
 
     private static void loadRemoteDriver() throws InterruptedException {
         ChromeOptions chromeOptions = new ChromeOptions();
+        String dockerVideosPath = System.getProperty("user.dir") + "/src/tests/videos";;
         wdm = WebDriverManager.chromedriver()
                 .browserInDocker()
                 .avoidDockerLocalFallback()
-//                .browserVersion()
+//                .browserVersion() // to use a specific version
 //                .browserInDockerAndroid() // --> for Chrome Mobile
-                .enableRecording() // only if you want to see the recordings // recordings as saved locally
+                .enableRecording() // only if you want to see the recordings // recordings are saved locally
+                .dockerRecordingOutput(dockerVideosPath)
                 .capabilities(chromeOptions) // passing options e.g. headless
                 .enableVnc();
         driver = wdm.create();

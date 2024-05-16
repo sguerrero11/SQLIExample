@@ -20,7 +20,5 @@ public class LoginTest {
         SauceDemoInventoryPage sauceDemoInventoryPage = new SauceDemoInventoryPage();
 
         asserts.isTrue(sauceDemoInventoryPage.isTitleVisible(),"Verify Products title is visible");
-
     }
-
 }
