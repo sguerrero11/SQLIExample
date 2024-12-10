@@ -43,7 +43,6 @@ public class SauceDemoLoginPage extends BasePage implements DefaultPage {
         sendKeys(username, username_locator);
         sendKeys(password, password_locator);
         click(loginButton_locator);
-
     }
 
     //endregion

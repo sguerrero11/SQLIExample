@@ -273,4 +273,50 @@ public class PetStoreApiHelper extends LoggerHelper {
         PetNameCounter petNameCounter = new PetNameCounter(petsList);
         System.out.println(petNameCounter.countPetNames());
     }
+
+    // the below was added for Alphapoint test
+
+    public String getUSDRate(String coin) {
+        responseTimeExpected = 1900L;
+
+        Response response = given()
+                //.basePath(petsByStatusPath)
+                //.queryParam("status", status)
+                .contentType(ContentType.JSON)
+                .log().all()
+                .when()
+                .get()
+                .then()
+                //.time(lessThanOrEqualTo(responseTimeExpected))
+//                .log().all()
+                .extract().response();
+
+        printResponse(response);
+
+        JsonPath jsonPath = response.jsonPath();
+        String usdRate = jsonPath.getString("bpi.USD.rate");
+
+        // Check the status code of the response
+        int statusCode = response.getStatusCode();
+
+        // Code is always 200, but it should return 400 if status is invalid according to API documentation
+        if (statusCode == 200) {
+            // printPetsByStatus(response, "sold");
+        } else {
+            // System.out.println("Failed to get pets by status. Status code: " + statusCode);
+            // Optionally, throw an exception or handle the error accordingly
+        }
+
+        return usdRate;
+    }
+
+    public void printResponse(Response response) {
+        logStep("Printing the response...");
+        System.out.println("Response Status Code: " + response.getStatusCode());
+        System.out.println("Response Time: " + response.getTime() + "ms");
+        System.out.println("Response Headers: " + response.getHeaders());
+        System.out.println("Response Body:\n" + response.prettyPrint());
+    }
+
+
 }
