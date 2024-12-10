@@ -43,5 +43,5 @@ build/
 /logs/browserstack-plugin.log
 /target
 /.idea
-*.logs
+*.log
 *.xml
