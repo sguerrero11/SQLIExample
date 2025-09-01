@@ -12,9 +12,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static helpers.yamlReader.YMLHelper.*;
 
@@ -26,6 +24,20 @@ public abstract class BrowserDriverHelper extends LoggerHelper {
     private static WebDriver browserVNC;
     private static WebDriverManager wdm;
     private static boolean vncEnabled;
+
+    private static String getRandomUserAgent() {
+        String[] userAgents = {
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_0) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15",
+                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+                "Mozilla/5.0 (iPhone; CPU iPhone OS 16_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Safari/604.1",
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"
+        };
+
+        int index = (int) (Math.random() * userAgents.length);
+        return userAgents[index];
+    }
+
 
 
     /**
@@ -81,6 +93,22 @@ public abstract class BrowserDriverHelper extends LoggerHelper {
 
         try {
             ChromeOptions options = new ChromeOptions();
+            // 👤 Random User Agent
+            options.addArguments("--user-agent=" + getRandomUserAgent());
+
+            // 🕵️‍♂️ Remove automation flags
+            options.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
+            options.setExperimentalOption("useAutomationExtension", false);
+
+            // 🌐 Start with a clean profile
+            options.addArguments("--disable-blink-features=AutomationControlled");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--remote-allow-origins=*");
+
+
+
 
             if (withMobileEmulation) {
                 Map<String, Object> mobileEmulation = new HashMap<>();
@@ -95,6 +123,35 @@ public abstract class BrowserDriverHelper extends LoggerHelper {
 
             logInfo("[BrowserDriver/loadChromeDriver] Loading local driver");
             driver = new ChromeDriver(options);
+
+            // 🚫 Hide 'navigator.webdriver'
+            ((ChromeDriver) driver).executeCdpCommand(
+                    "Page.addScriptToEvaluateOnNewDocument",
+                    Map.of("source",
+                            "Object.defineProperty(navigator, 'webdriver', {get: () => undefined});"
+                    )
+            );
+
+            // 🧹 Clean other JS fingerprints (optional)
+            ((ChromeDriver) driver).executeCdpCommand(
+                    "Page.addScriptToEvaluateOnNewDocument",
+                    Map.of("source",
+                            "window.navigator.chrome = { runtime: {} };"
+                    )
+            );
+            ((ChromeDriver) driver).executeCdpCommand(
+                    "Page.addScriptToEvaluateOnNewDocument",
+                    Map.of("source",
+                            "Object.defineProperty(navigator, 'languages', {get: () => ['en-US', 'en']});"
+                    )
+            );
+            ((ChromeDriver) driver).executeCdpCommand(
+                    "Page.addScriptToEvaluateOnNewDocument",
+                    Map.of("source",
+                            "Object.defineProperty(navigator, 'plugins', {get: () => [1, 2, 3, 4, 5]});"
+                    )
+            );
+
         } catch (Exception ex) {
             logError("[BrowserDriver/loadChromeDriver] Error loading Selenium Driver: " + ex.getMessage());
         }
@@ -106,6 +163,12 @@ public abstract class BrowserDriverHelper extends LoggerHelper {
     private static void loadFFDriver() {
         try {
             FirefoxOptions options = new FirefoxOptions();
+            String userAgent = getRandomUserAgent();
+            options.addPreference("general.useragent.override", userAgent);
+            options.addPreference("dom.webdriver.enabled", false);
+            options.addPreference("useAutomationExtension", false);
+
+
 
             if (withMobileEmulation) {
                 Map<String, Object> mobileEmulation = new HashMap<>();
@@ -132,6 +195,9 @@ public abstract class BrowserDriverHelper extends LoggerHelper {
     private static void loadEdgeDriver() {
         try {
             EdgeOptions options = new EdgeOptions();
+            String userAgent = getRandomUserAgent();
+            options.addArguments("--user-agent=" + userAgent);
+
 
             if (withMobileEmulation) {
                 Map<String, String> mobileEmulation = new HashMap<>();
@@ -146,6 +212,13 @@ public abstract class BrowserDriverHelper extends LoggerHelper {
 
             logInfo("[BrowserDriver/loadEdgeDriver] Loading local driver");
             driver = new EdgeDriver(options);
+
+            ((EdgeDriver) driver).executeCdpCommand(
+                    "Page.addScriptToEvaluateOnNewDocument",
+                    Map.of("source",
+                            "Object.defineProperty(navigator, 'webdriver', { get: () => undefined })")
+            );
+
         } catch (Exception ex) {
             logError("[BrowserDriver/loadEdgeDriver] Error loading Selenium Driver: " + ex.getMessage());
         }
@@ -153,6 +226,9 @@ public abstract class BrowserDriverHelper extends LoggerHelper {
 
     private static void loadRemoteDriver() throws InterruptedException {
         ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--user-agent=" + getRandomUserAgent());
+        // continue with WDM setup...
+
         String dockerVideosPath = System.getProperty("user.dir") + "/src/tests/videos";;
         wdm = WebDriverManager.chromedriver()
                 .browserInDocker()
