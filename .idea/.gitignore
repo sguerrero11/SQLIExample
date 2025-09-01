@@ -5,4 +5,4 @@
 /reportsForManualQA/
 /logs
 /logs/browserstack-plugin.log
-
+.idea/
